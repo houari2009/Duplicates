@@ -1,0 +1,62 @@
+# This is a sample Python script.
+
+# Press Maj+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+
+import os
+import math
+import time
+
+from collections import defaultdict
+from pathlib import Path
+
+def duplicateFiles(path):
+  allFilesList = []
+
+  for (root, dirs, files) in (os.walk(path)):
+    # print(root, dirs, files)
+    for i in files:
+
+      file = root + "\\" + i
+      # print(file, end="   ")
+      # print(os.path.getsize(file))
+
+      allFilesList.append([root, i, os.path.getsize(file)])
+  """
+  for i in allFilesList:
+    print(i)
+  """
+  freeUP=0
+  duplicateFilesList = []
+  for i in range(len(allFilesList) - 1):
+    j = i + 1
+    while j != (len(allFilesList)):
+      if allFilesList[i][1] == allFilesList[j][1] and allFilesList[i][2] == allFilesList[j][2]:
+        duplicateFilesList.append(allFilesList[j])
+        freeUP+=allFilesList[j][2]
+
+      j += 1
+
+  freeUP/=(1024*1024)
+  print(int(freeUP), " MB will free up from DISK")
+
+
+  return duplicateFilesList
+
+def deleteFiles(lista):
+  for i in range(len(lista)):
+    os.remove(lista[i][0]+"\\"+lista[i][1])
+    print(lista[i][0] + "\\" + lista[i][1]+"  ** DELETED **")
+
+lista=duplicateFiles("g:\\To Restore")
+
+if lista:
+  print("Here are the duplicate files and their corresponding directories")
+  for i in lista:
+    print(i[1], " FOUND IN ", i[0])
+
+  answer=input("Do you want to delete duplicates ?")
+  if answer=="y" or answer=="Y":
+    deleteFiles(lista)
+else:
+  print("No duplicates ..")
