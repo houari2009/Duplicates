@@ -31,7 +31,7 @@ def duplicateFiles(path):
   for i in range(len(allFilesList) - 1):
     j = i + 1
     while j != (len(allFilesList)):
-      if allFilesList[i][1] == allFilesList[j][1] and allFilesList[i][2] == allFilesList[j][2]:
+      if allFilesList[i][1] == allFilesList[j][1] and allFilesList[i][2] == allFilesList[j][2] and allFilesList[i] not in duplicateFilesList:
         duplicateFilesList.append(allFilesList[j])
         freeUP+=allFilesList[j][2]
 
@@ -48,7 +48,7 @@ def deleteFiles(lista):
     os.remove(lista[i][0]+"\\"+lista[i][1])
     print(lista[i][0] + "\\" + lista[i][1]+"  ** DELETED **")
 
-lista=duplicateFiles("g:\\To Restore")
+lista=duplicateFiles("e:\\temps")
 
 if lista:
   print("Here are the duplicate files and their corresponding directories")
